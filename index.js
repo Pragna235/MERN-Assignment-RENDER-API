@@ -19,16 +19,16 @@ app.listen(PORT, () => console.log(`Server is Running ${PORT}`));
 
 //GET All USERS
 
-app.get('/api/users',(req,res)=>res.json(users));
+app.get('/api/sunglasses',(req,res)=>res.json(users));
 
 //GET Specific USER Based on ID
 
-app.get('/api/users/:id', (req, res) => {
+app.get('/api/sunglasses/:id', (req, res) => {
 
-const found = users.some(idFilter(req));
+const found = sunglasses.some(idFilter(req));
 
 if (found) {
-res.json(users.filter(idFilter(req)));
+res.json(sunglasses.filter(idFilter(req)));
 } else {
 res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
 }
@@ -38,11 +38,11 @@ res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
 
 //CREATE A NEW USER
 
-app.post('/api/users',(req,res)=>{
+app.post('/api/sunglasses',(req,res)=>{
 
 const newMember={
 
-id: users.length + 1,
+id: sunglasses.length + 1,
 name: req.body.name,
 email: req.body.email,
 status: 'guest'
@@ -53,21 +53,21 @@ if(!newMember.name || !newMember.email){
 return res.status(400).json({msg:'NAME and EMAIL Must be provided'});
 }
 
-users.push(newMember);
-res.json(users);
+sunglasses.push(newMember);
+res.json(sunglasses);
 }
 
 );
 
 //DELETE Specific USER Based on ID
 
-app.delete('/api/users/:id', (req, res) => {
+app.delete('/api/sunglasses/:id', (req, res) => {
 
-const found = users.some(idFilter(req));
+const found = sunglasses.some(idFilter(req));
 
 if (found) {
 res.json({msg:'Deleted',
-members:users.filter(
+members:sunglasses.filter(
 member=>member.id!==parseInt(req.params.id))})
 } else {
 res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
@@ -77,15 +77,15 @@ res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
 
 //UPDATE Specific USER Based on ID
 
-app.put('/api/users/:id',(req,res)=>
+app.put('/api/sunglasses/:id',(req,res)=>
 
 {
-const found = users.some(member=>member.id===parseInt(req.params.id));
+const found = sunglasses.some(member=>member.id===parseInt(req.params.id));
 
 if(found)
 {
 const updMember=req.body;
-users.forEach(
+sunglasses.forEach(
 member=>{
 if(member.id===parseInt(req.params.id))
 {
