@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Data Display</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 24px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 80px;
+            max-height: 80px;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>API Data Display</h2>
+    <table id="apiDataTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Discount Percentage</th>
+                <th>Rating</th>
+                <th>Stock</th>
+                <th>Brand</th>
+                <th>Category</th>
+                <th>Thumbnail</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table body will be populated using JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        // Fetch data from the API endpoint
+        fetch('https://sunglasses-44ax.onrender.com/api/sunglasses')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Check if data is an array and not empty
+                if (Array.isArray(data) && data.length > 0) {
+                    const tableBody = document.querySelector('#apiDataTable tbody');
+
+                    // Iterate through each data item and append rows to the table
+                    data.forEach(item => {
+                        const row = tableBody.insertRow();
+                        const cell1 = row.insertCell(0);
+                        const cell2 = row.insertCell(1);
+                        const cell3 = row.insertCell(2);
+                        const cell4 = row.insertCell(3);
+                        const cell5 = row.insertCell(4);
+                        const cell6 = row.insertCell(5);
+                        const cell7 = row.insertCell(6);
+                        const cell8 = row.insertCell(7);
+                        const cell9 = row.insertCell(8);
+                        const cell10 = row.insertCell(9);
+
+                        cell1.textContent = item.id;
+                        cell2.textContent = item.title;
+                        cell3.textContent = item.description;
+                        cell4.textContent = `$${item.price}`;
+                        cell5.textContent = `${item.discountPercentage}%`;
+                        cell6.textContent = item.rating;
+                        cell7.textContent = item.stock;
+                        cell8.textContent = item.brand;
+                        cell9.textContent = item.category;
+
+                        // Display thumbnail image
+                        const thumbnailImg = document.createElement('img');
+                        thumbnailImg.src = item.thumbnail;
+                        cell10.appendChild(thumbnailImg);
+                    });
+                } else {
+                    console.error('Empty or invalid data received from the API.');
+                }
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+
+</body>
+</html>
