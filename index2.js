@@ -21,41 +21,53 @@ app.listen(PORT, () => console.log(`Server is Running ${PORT}`));
 
 app.get('/api/sunglasses',(req,res)=>res.json(users));
 
-// GET All Users in table format
-app.get('/api/sunglasses/table',(req,res) => {
-  const tableHtml = `
-  <style>
-  table{
-  border-collapse: collapse;
-  width: 100%;
-  }
-  th, td{
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-  }
-  th{
-  background-color: #f2f2f2;
-  }
-  </style>
-  <table>
-  <thead>
-  <tr>
-     <th> ID </th>
-     <th> Title </th>
-     <th> Price </th>
-     <th> Discount Percentage </th>
-     <th> Rating </th>
-     <th> Stock </th>
-  </tr>
-  
-  `).join('')}
-</tbody>
-  </table>;
+// GET All USERS in table format
+app.get('/api/sunglasses/table', (req, res) => {
+    const tableHtml = `
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Discount Percentage</th>
+                 <th>Rating</th>
+                  <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${users.map(user => `
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.title}</td>
+                    <td>${user.price}</td>
+                    <td>${user.discountPercentage}</td>
+                    <td>${user.rating}</td>
+                    <td>${user.stock }</td>
+                </tr>
+            `).join('')}
+        </tbody>
+    </table>`;
 
-res.send(tableHtml);
+    res.send(tableHtml);
 });
+
 //GET Specific USER Based on ID
+
 app.get('/api/sunglasses/:id', (req, res) => {
 
 const found = sunglasses.some(idFilter(req));
