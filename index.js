@@ -43,14 +43,16 @@ app.post('/api/sunglasses',(req,res)=>{
 const newMember={
 
 id: sunglasses.length + 1,
-name: req.body.name,
-email: req.body.email,
-status: 'guest'
+title: req.body.title,
+price: req.body.price,
+discountPercentage: req.body.discountPercentage,
+rating: req.body.rating,
+stock: req.body.stock
 
 };
 
-if(!newMember.name || !newMember.email){
-return res.status(400).json({msg:'NAME and EMAIL Must be provided'});
+if(!newMember.title || !newMember.price){
+return res.status(400).json({msg:'TITLE and PRICe must be provided'});
 }
 
 sunglasses.push(newMember);
@@ -89,8 +91,9 @@ sunglasses.forEach(
 member=>{
 if(member.id===parseInt(req.params.id))
 {
-member.name=updMember ? updMember.name : member.name;
-member.email=updMember.email ? updMember.email : member.email;
+member.title=updMember ? updMember.title : member.title;
+member.price=updMember.price ? updMember.price : member.price;
+member.stock=updMember.stock ? updMember.stock : member.stock;
 res.json({msg:'Updated Details',member})
 }
 }
